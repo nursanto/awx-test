@@ -1,6 +1,6 @@
 ---
 - name: Testing initial on devzero.edu
-  hosts: localhost
+  hosts: 192.168.6.211
   
   tasks:
   - name: Create a new instance and attaches to a network and passes metadata to the instance
