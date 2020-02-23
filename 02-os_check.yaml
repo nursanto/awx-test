@@ -1,0 +1,7 @@
+---
+- name: OS distribution check
+  hosts: all
+  tasks:
+    - name: OS check
+      debug:
+              msg: "hostname: {{ansible_hostname}}; distribution: {{ansible_distribution}} ;pkg manager: {{ansible_pkg_mgr}}"

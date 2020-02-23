@@ -1,0 +1,16 @@
+---
+- name: Install httpd
+  hosts: all
+
+  tasks:
+  - name: Install httpd package on Ubuntu hosts
+    apt:
+     name: apache2
+     state: absent
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Install httpd package on Fedora or CentOS hosts
+    dnf:
+     name: httpd
+     state: absent
+    when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
