@@ -3,6 +3,12 @@
   hosts: all
 
   tasks:
+  - name: Make sure a service is stopped
+    systemd:
+      state: stopped
+      enabled: no
+      name: apache2
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   - name: Install httpd package on Ubuntu hosts
     apt:
      name: apache2
@@ -12,16 +18,10 @@
     systemd:
       state: stopped
       enabled: no
-      name: apache2
-    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      name: httpd
+    when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
   - name: Install httpd package on Fedora or CentOS hosts
     dnf:
      name: httpd
      state: absent
-    when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
-  - name: Make sure a service is stopped
-    systemd:
-      state: stopped
-      enabled: no
-      name: httpd
     when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
