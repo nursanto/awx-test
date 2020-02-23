@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
+Vagrant.configure(2) do |config|
+
+# create centos 8 vm
+  NodeCount = 2
+  (1..NodeCount).each do |i|
+    config.vm.define "cent8-#{i}" do |cent8|
+      cent8.vm.box = "centos/8"
+      cent8.vm.hostname = "centos-#{i}.example.lab"
+      cent8.vm.network "private_network", ip: "172.42.42.10#{i}"
+      cent8.vm.provider "virtualbox" do |v|
+        v.name = "centos-#{i}"
+        v.memory = 1024
+        v.cpus = 1
+      end
+      cent8.vm.provision "shell", path: "bootstrap-cent8.sh"
+    end
+  end
+
+# create ubuntu 18.04 vm
+  NodeUbuntu = 2
+  (1..NodeUbuntu).each do |i|
+    config.vm.define "ubuntu_18.04-#{i}" do |ubuntu|
+      ubuntu.vm.box = "ubuntu/bionic64"
+      ubuntu.vm.hostname = "ubuntu-#{i}.example.lab"
+      ubuntu.vm.network "private_network", ip: "172.42.42.11#{i}"
+      ubuntu.vm.provider "virtualbox" do |v|
+        v.name = "ubuntu-#{i}"
+        v.memory = 1024
+        v.cpus = 1
+      end
+      ubuntu.vm.provision "shell", path: "bootstrap-ubuntu.sh"
+    end
+  end
+  
+# create fedora27 vm
+  config.vm.define "fedora27-1" do |fedora|
+    fedora.vm.box = "generic/fedora27"
+    fedora.vm.hostname = "fedora-1.example.lab"
+    fedora.vm.network "private_network", ip: "172.42.42.121"
+    fedora.vm.provider "virtualbox" do |v|
+      v.name = "fedora-1"
+      v.memory = 1024
+      v.cpus = 1
+    end
+    fedora.vm.provision "shell", path: "bootstrap-fedora.sh"
+  end
+
+end
