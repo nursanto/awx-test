@@ -7,9 +7,20 @@
      name: apache2
      state: present
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-
+  - name: Make sure a service is running
+    systemd:
+      state: started
+      enabled: yes
+      name: apache2
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   - name: Install httpd package on Fedora or CentOS hosts
     dnf:
      name: httpd
      state: present
+    when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
+  - name: Make sure a service is running
+    systemd:
+      state: started
+      enabled: yes
+      name: httpd
     when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
