@@ -6,6 +6,7 @@
 * [Install AWX](#Install-AWX)
 
 ### Install VirtualBox
+	yum -y update
 	yum -y install wget vim tmux rsync kernel-devel kernel-headers  make patch gcc
 	wget https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -P /etc/yum.repos.d/
 	sed -i 's/enabled=1/enabled=0/g' /etc/yum.repos.d/virtualbox.repo
@@ -33,7 +34,7 @@
 	git clone https://github.com/ansible/awx.git
 	cd awx/installer/
 	cat inventory
-	...
+	
 	...
 	localhost ansible_connection=local ansible_python_interpreter="/usr/bin/env python3"
 	...
@@ -43,4 +44,28 @@
 	dnf install ansible --enablerepo epel
 	ansible-playbook -i inventory install.yml
 
+### Create VM
+	git clone https://github.com/nursanto/awx-test.git
+	cd awx-test/materials/
+	vagrant up
+	vagrant status
+it will create 5 vm. For the first time it takes about 10minute depand on your internet connection.
+![vagrant](./materials/01.png "vagrant status")
 
+### Access AWX Dashboard
+awx dashboard can be accessed form host IP Address. with user=admin, password=password
+![dashboard](./materials/04.png "dashboard")
+
+After 'vagrant up' completed, that will create 5 vm with the following details.
+
+|      IP    	|       Hostname       |       u/p       |
+|---------------|----------------------|-----------------|		
+| 172.42.42.101 | centos-1.example.lab | plowoh/password |
+| 172.42.42.102 | centos-2.example.lab | plowoh/password |
+| 172.42.42.111 | ubuntu-1.example.lab | plowoh/password |
+| 172.42.42.112 | ubuntu-2.example.lab | plowoh/password |
+| 172.42.42.121 | fedora-1.example.lab | plowoh/password |
+
+![host](./materials/02.png "host")
+
+add that vm to host in awx, and good luck..
