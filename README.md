@@ -66,6 +66,5 @@ After 'vagrant up' completed, that will create 5 vm with the following details.
 | 172.42.42.112 | ubuntu-2.example.lab | plowoh/password |
 | 172.42.42.121 | fedora-1.example.lab | plowoh/password |
 
-![host](./materials/02.png "host")
-
 add that vm to host in awx, and good luck..
+![host](./materials/02.png "host")
