@@ -13,6 +13,13 @@
       enabled: yes
       name: apache2
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  - name: Stop and disable ufw
+    systemd:
+      state: stopped
+      enabled: no
+      name: ufw
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
   - name: Install httpd package on Fedora or CentOS hosts
     dnf:
      name: httpd
@@ -24,3 +31,15 @@
       enabled: yes
       name: httpd
     when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
+  - name: Stop and disable ufw
+    systemd:
+      state: stopped
+      enabled: no
+      name: firewalld
+    when: ansible_distribution == 'Fedora' or ansible_distribution == 'CentOS'
+
+  - name: Copy file with owner and permissions
+    copy:
+      src: ./materials/index.html
+      dest: /var/www/html/index.html
+      mode: '0755'
